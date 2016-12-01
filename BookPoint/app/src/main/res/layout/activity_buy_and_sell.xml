@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_buy_and_sell"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/books_stack2"
+    tools:context="com.deshmukh.hrishikesh.bookpoint.BuyAndSellActivity">
+
+    <Button
+        android:text="Sell Books"
+        android:textStyle="bold"
+        android:textSize="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/sell_button"
+        android:layout_below="@+id/buy_button"
+        android:layout_alignStart="@+id/buy_button"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/username_tv"
+        android:gravity="center"
+        android:textSize="40dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_below="@+id/user_imageView"
+        android:layout_alignParentStart="true"
+        android:layout_margin="5dp"/>
+
+    <Button
+        android:text="Buy Books "
+        android:textStyle="bold"
+        android:textSize="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buy_button"
+        android:layout_below="@+id/question_tv"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/question_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="5dp"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:text="What do you want to do today?"
+        android:textColor="@color/black"
+        android:layout_below="@+id/username_tv"
+        android:layout_alignParentStart="true"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="152dp"
+        app:srcCompat="@drawable/profile_pic"
+        android:id="@+id/user_imageView"
+        android:layout_below="@+id/hello_tv"
+        android:layout_alignParentStart="true"
+        android:padding="5dp"/>
+
+    <TextView
+        android:text="Hello,"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/hello_tv"
+        android:gravity="center"
+        android:padding="10dp"
+        android:textColor="@color/black"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"/>
+
+</RelativeLayout>
