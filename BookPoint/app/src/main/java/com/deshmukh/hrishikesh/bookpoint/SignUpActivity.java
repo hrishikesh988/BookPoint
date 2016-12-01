@@ -33,6 +33,8 @@ public class SignUpActivity extends AppCompatActivity {
     private ImageButton mCameraButton;
     private ImageButton mLocationButton;
 
+    private Bitmap imageBitmap;
+
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int PLACE_PICKER_REQUEST=2;
 
@@ -67,6 +69,11 @@ public class SignUpActivity extends AppCompatActivity {
                 }
                 else if(! mPassword.getText().toString().equals(mConfirmPassword.getText().toString())){
                     Toast.makeText(SignUpActivity.this, "Passwords do not match! Please try again.",Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    String username = mFirstName.getText().toString() + " " +mLastName.getText().toString()+"!";
+                    Intent i = BuyAndSellActivity.newIntent(SignUpActivity.this,imageBitmap,username);
+                    startActivity(i);
                 }
             }
         });
@@ -123,7 +130,7 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            imageBitmap = (Bitmap) extras.get("data");
             mProfilePic.setImageBitmap(imageBitmap);
         }
         if (requestCode == PLACE_PICKER_REQUEST) {
