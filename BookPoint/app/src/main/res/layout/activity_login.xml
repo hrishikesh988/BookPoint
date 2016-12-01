@@ -29,7 +29,8 @@
             android:id="@+id/UserName_ET"
             android:background="@color/white"
             android:textSize="@dimen/login_size"
-            android:hint="User Name"/>
+            android:hint="Email ID"
+            android:padding="5dp"/>
 
         <EditText
             android:layout_width="match_parent"
@@ -40,7 +41,14 @@
             android:layout_margin="10dp"
             android:background="@color/white"
             android:textSize="@dimen/login_size"
-            android:hint="Password"/>
+            android:hint="Password"
+            android:padding="5dp"/>
+
+        <CheckBox
+            android:text="Remember me"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/remember_me_checkbox"/>
 
         <Button
             android:layout_width="match_parent"
@@ -55,5 +63,6 @@
             android:text="@string/sign_up_text"
             android:id="@+id/SignUp_Button"
             android:layout_margin="5dp"/>
+
     </LinearLayout>
 </RelativeLayout>
