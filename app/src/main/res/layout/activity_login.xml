@@ -27,10 +27,11 @@
             android:ems="10"
             android:layout_margin="8dp"
             android:id="@+id/UserName_ET"
-            android:background="@color/white"
+            android:background="@android:color/transparent"
             android:textSize="@dimen/login_size"
             android:hint="Email ID"
-            android:padding="5dp"/>
+            android:padding="5dp"
+            />
 
         <EditText
             android:layout_width="match_parent"
@@ -39,7 +40,7 @@
             android:ems="10"
             android:id="@+id/Password_ET"
             android:layout_margin="8dp"
-            android:background="@color/white"
+            android:background="@android:color/transparent"
             android:textSize="@dimen/login_size"
             android:hint="Password"
             android:padding="5dp"/>
@@ -48,7 +49,8 @@
             android:text="Remember me"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/remember_me_checkbox"/>
+            android:id="@+id/remember_me_checkbox"
+            android:textColorLink="?attr/actionMenuTextColor"/>
 
         <Button
             android:layout_width="match_parent"

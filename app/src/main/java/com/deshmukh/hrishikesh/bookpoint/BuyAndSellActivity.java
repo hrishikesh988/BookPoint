@@ -31,7 +31,12 @@ public class BuyAndSellActivity extends AppCompatActivity {
         Bitmap imageBitmap = (Bitmap) extras.get("image");
         String username = extras.getString("user_name");
         mUserName_TV.setText(username);
-        mUserPic.setImageBitmap(imageBitmap);
+        if(imageBitmap != null)
+            mUserPic.setImageBitmap(imageBitmap);
+        else {
+
+            mUserPic.setImageDrawable(getResources().getDrawable(R.drawable.profile_pic, null));
+        }
     }
     @Override
     public void onBackPressed() {
