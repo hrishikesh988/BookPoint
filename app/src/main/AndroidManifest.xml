@@ -40,6 +40,9 @@
         </activity>
         <activity android:name=".BuyAndSellActivity">
         </activity>
+        <activity android:name=".BuyActivity">
+        </activity>
+        <activity android:name=".SellActivity"></activity>
     </application>
 
 </manifest>

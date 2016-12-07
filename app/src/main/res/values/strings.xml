@@ -3,4 +3,9 @@
 
     <string name="sign_in_text">Sign In</string>
     <string name="sign_up_text">Sign Up</string>
+    <string name="condition">condition</string>
+    <string-array name="Conditions">
+        <item>New</item>
+        <item>Used</item>
+    </string-array>
 </resources>

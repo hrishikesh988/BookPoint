@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:inputType="textPersonName"
+        android:text="Name"
+        android:ems="10"
+        android:id="@+id/name"
+        android:gravity="center"
+        />
+
+    <Button
+        android:text="Search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/search"/>
+
+    <ImageButton
+        android:layout_width="69dp"
+        android:layout_height="79dp"
+        app:srcCompat="@drawable/google_voice_search"
+        android:id="@+id/imageButton"
+        android:layout_marginLeft="157dp"
+
+        android:onClick="onButtonClick"/>
+
+    <TextView
+        android:text="Tap to Search"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/textView"
+        android:gravity="center"
+        />
+
+</LinearLayout>
