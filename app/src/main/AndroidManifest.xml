@@ -38,11 +38,22 @@
             android:name=".SignUpActivity"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".BuyAndSellActivity">
+        <activity android:name=".BuyAndSellActivity"
+                  android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".BuyActivity">
+        <activity android:name=".BuyActivity"
+                  android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".SellActivity"></activity>
+        <activity android:name=".SellActivity"/>
+        <activity android:name=".SearchResultActivity"
+                  android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".MainActivity"
+                  android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".BuyBookActivity"
+                  android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>

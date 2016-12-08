@@ -9,17 +9,18 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:inputType="textPersonName"
-        android:text="Name"
         android:ems="10"
         android:id="@+id/name"
         android:gravity="center"
-        />
+        android:hint="Name"
+        android:layout_marginTop="70dp"/>
 
     <Button
         android:text="Search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/search"/>
+        android:id="@+id/search"
+        android:layout_margin="20dp"/>
 
     <ImageButton
         android:layout_width="69dp"

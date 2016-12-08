@@ -5,7 +5,8 @@
     <string name="sign_up_text">Sign Up</string>
     <string name="condition">condition</string>
     <string-array name="Conditions">
-        <item>New</item>
+        <item>Like a New</item>
+        <item>In good condition</item>
         <item>Used</item>
     </string-array>
 </resources>

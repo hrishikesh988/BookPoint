@@ -1,18 +1,15 @@
 package com.deshmukh.hrishikesh.bookpoint;
 
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.speech.RecognizerIntent;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -29,6 +26,13 @@ public class BuyActivity extends AppCompatActivity {
     private ImageButton mImageButton;
     private EditText mBookname;
 
+
+    public static Intent newIntent(Context packageContext, String username) {
+        Intent i = new Intent( packageContext, BuyActivity.class);
+        i.putExtra("user_name", username);
+        return i;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +41,16 @@ public class BuyActivity extends AppCompatActivity {
         mBookname = (EditText) findViewById(R.id.name);
         mSearchButton = (Button) findViewById(R.id.search);
         mImageButton = (ImageButton) findViewById(R.id.imageButton);
+
+        mSearchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle extras = getIntent().getExtras();
+                String username = extras.getString("user_name");
+                Intent i = BuyBookActivity.newIntent(BuyActivity.this,username,mBookname.getText().toString() );
+                startActivity(i);
+            }
+        });
     }
 
     public void onButtonClick(View v)
@@ -51,7 +65,7 @@ public class BuyActivity extends AppCompatActivity {
         Intent i = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         i.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         i.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
-        i.putExtra(RecognizerIntent.EXTRA_PROMPT, "say something");
+        i.putExtra(RecognizerIntent.EXTRA_PROMPT, "Which book do you want to buy? ");
 
         try {
             startActivityForResult(i, 100);

@@ -72,30 +72,30 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:text="Title"
-        android:ems="10"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:id="@+id/name"/>
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Price"
         android:ems="10"
         android:layout_alignTop="@+id/textView2"
         android:layout_alignParentEnd="true"
-        android:id="@+id/price"/>
+        android:id="@+id/price"
+        android:hint="Price"/>
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:text="Publisher"
         android:ems="10"
-        android:layout_alignTop="@+id/textView3"
+        android:id="@+id/name"
+        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:id="@+id/publisher"/>
+        android:hint="Title"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/publisher"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/textView3"
+        android:hint="Publisher"/>
 
 </RelativeLayout>
