@@ -18,22 +18,33 @@ import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * Created by dhawaldabholkar on 12/3/16.
+ * this is a SellActivity in which user publishes a book for selling by specifying details about the book he wants to sell.
+ * The book details get stored in central database.
  */
 
 public class SellActivity extends AppCompatActivity {
+
+    //Edit text to receive title, price, publisher of the user
     private EditText mTitle;
     private EditText mPrice;
     private EditText mPublisher;
+    //Spinner to receive condition of book. spinner values: Like a new, In good condition, Used
     private Spinner mSpinner;
 
+    //User authenticator and db reference
     private FirebaseAuth mFirebaseAuth;
     private DatabaseReference mDatabaseReference;
 
+    //place holders of submit and reset buttons
     private Button mSubmit;
     private Button mReset;
     String username;
+
+    //array to hold spinner values
     ArrayAdapter<CharSequence> adapter;
 
+    //Method to put extra in the intent
+    //This method puts user's uID  in intent which is passed by BuyAndSellActivity
     public static Intent newIntent(Context packageContext, String username) {
         Intent i = new Intent( packageContext, SellActivity.class);
         i.putExtra("user_name", username);
@@ -45,6 +56,8 @@ public class SellActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sell);
+
+        //wire up all the resources
         mReset = (Button)findViewById(R.id.reset_button);
         mTitle = (EditText)findViewById(R.id.name);
         mPrice = (EditText)findViewById(R.id.price);
@@ -80,12 +93,15 @@ public class SellActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                //validate the book information
+
                 if(mTitle.getText().toString().trim() == "" || mPrice.getText().toString().trim() == "" || mPublisher.getText().toString().trim() == "" ){
 
                     Toast.makeText(SellActivity.this, "Book information fields cannot be empty",Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
+                    //if book information is valid, add book to firebase database by calling saveBookInfo method
                     saveBookInfo();
                     Toast.makeText(SellActivity.this, "Book added",Toast.LENGTH_SHORT).show();
                     mTitle.setText("");
@@ -95,13 +111,15 @@ public class SellActivity extends AppCompatActivity {
             }
         });
 
+        //OnClickListener for reset button - sets value of all editTexts to ""
+
         mReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mTitle.setText("");
                 mPrice.setText("");
                 mPublisher.setText("");
-                //mSpinner.setAdapter(null);
+
 
             }
         });
@@ -109,21 +127,23 @@ public class SellActivity extends AppCompatActivity {
 
     }
 
-
-
-
+    /**
+     * this is a saveBookInfo which create a object of Books class and initializes its member variables with the values provided by user
+     * and saves the Books object on Firebase real-time database.
+     */
     private void saveBookInfo(){
 
-        String Title = mTitle.getText().toString();
-        String price = mPrice.getText().toString();
-        String Publisher = mPublisher.getText().toString();
+        String Title = mTitle.getText().toString().trim();
+        String price = mPrice.getText().toString().trim();
+        String Publisher = mPublisher.getText().toString().trim();
         String condition = mSpinner.getSelectedItem().toString();
         String uid = mFirebaseAuth.getCurrentUser().getUid();
 
 
+        //Creates the object of Books class and initializes its member variables with the values provided by user
         Books book = new Books(Title, price, Publisher, condition,uid);
 
-        //mDatabaseReference.child("Books").child(Title).setValue(book);
+        //saves the Books object on firebase real-time database.
         mDatabaseReference.child(Title).setValue(book);
     }
 

@@ -26,8 +26,20 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+/**
+ * This is a sign up activity class which takes user details from user and store them on fire base database.
+ * User information:
+ *      First Name
+ *      Last Name
+ *      Phone Number
+ *      email
+ *      Password
+ *      location
+ */
+
 public class SignUpActivity extends AppCompatActivity {
 
+    //Define edit texts to take user details
     private EditText mFirstName;
     private EditText mLastName;
     private EditText mPhoneNumber;
@@ -36,9 +48,12 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText mConfirmPassword;
     private EditText mLocation;
 
+    //Define ImageView to store profile picture
     private ImageView mProfilePic;
+    //Define buttons to register and reset
     private Button mRegisterButton;
     private Button mResetButton;
+    //Image button to start camera and to launch PlacePicker intent
     private ImageButton mCameraButton;
     private ImageButton mLocationButton;
 
@@ -60,6 +75,7 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
+        //Wire up all the resources
         mFirstName = (EditText) findViewById(R.id.first_name_et);
         mLastName = (EditText) findViewById(R.id.last_name_et);
         mPhoneNumber = (EditText) findViewById(R.id.phone_number_et);
@@ -77,10 +93,12 @@ public class SignUpActivity extends AppCompatActivity {
         mFirebaseAuth = FirebaseAuth.getInstance();
         mDatabaseReference = FirebaseDatabase.getInstance().getReference();
 
+        //OnClickListener for mRegisterButton to store user's information to DB
         mRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                //Validate info entered by the user
                 if(mFirstName.getText().toString().trim().equals("") || mLastName.getText().toString().trim().equals("")
                         ||mPhoneNumber.getText().toString().trim().equals("") || mEmailID.getText().toString().trim().equals("")
                         || mPassword.getText().toString().trim().equals("") || mConfirmPassword.getText().toString().trim().equals("")
@@ -93,6 +111,10 @@ public class SignUpActivity extends AppCompatActivity {
                 else if (mPhoneNumber.getText().toString().length()<6){
                     Toast.makeText(SignUpActivity.this, "Passwords be at least 6 letters. ",Toast.LENGTH_SHORT).show();
                 }
+
+                //if information found correct do:
+                //1. Show progress dialog
+                //2. store user data to firebase DB
                 else{
                     mProgressDialog.setMessage("Registering User...");
                     mProgressDialog.show();
@@ -130,6 +152,7 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
+        //OnClickListener for mResetButton  to reset all edit text fields
         mResetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -143,6 +166,7 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
+        //OnClickListener for mCameraButton which start takePhotoIntent to take picture from camera and set it to image view later
         mCameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -154,6 +178,7 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
+        //OnClickListener for mLocationButton which start PlacePicker to take user's current location from Google Maps and set it to edit text view later
         mLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -178,29 +203,43 @@ public class SignUpActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * saveUserInfo - this method store user's information to firebase user Authentication database
+     */
     private void saveUserInfo(){
 
-        String firstName = mFirstName.getText().toString();
-        String lastName = mLastName.getText().toString();
-        String phoneNumber = mPhoneNumber.getText().toString();
-        String location = mLocation.getText().toString();
-        String email = mEmailID.getText().toString();
-        String password = mPassword.getText().toString();
+        String firstName = mFirstName.getText().toString().trim();
+        String lastName = mLastName.getText().toString().trim();
+        String phoneNumber = mPhoneNumber.getText().toString().trim();
+        String location = mLocation.getText().toString().trim();
+        String email = mEmailID.getText().toString().trim();
+        String password = mPassword.getText().toString().trim();
 
 
         UserInformation user = new UserInformation(firstName, lastName, phoneNumber,email,password,location);
         FirebaseUser current_user = mFirebaseAuth.getCurrentUser();
 
+        //Get uID of an user, set it as a parent of JSON tree and add user's info as its children.
         mDatabaseReference.child(current_user.getUid()).setValue(user);
     }
 
+    /**
+     *
+     * @param requestCode - Request code sent in an intent
+     * @param resultCode - Result code received from an intent
+     * @param data - data received from an intent
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        //If request code is REQUEST_IMAGE_CAPTURE and result code is OK, set user's profile picture as image from received from camera
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             imageBitmap = (Bitmap) extras.get("data");
             mProfilePic.setImageBitmap(imageBitmap);
         }
+
+        //If request code is REQUEST_IMAGE_CAPTURE and result code is OK, set user location as location received from PlacePicker
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
                 Place place = PlacePicker.getPlace(data, SignUpActivity.this);

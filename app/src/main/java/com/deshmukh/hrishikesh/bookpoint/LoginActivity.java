@@ -79,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                //If user checks "remember me" check box was checked last time restore user's login info
+                //If user checks "remember me" check box at the time of login, save user's credentials
                 if(mRememberMe.isChecked()){
                     loginPrefEditor.putBoolean("saveLogin", true);
                     loginPrefEditor.putString("username",mUserName.getText().toString());
@@ -94,6 +94,7 @@ public class LoginActivity extends AppCompatActivity {
                 mProgressDialog.setMessage("Signing In...");
                 mProgressDialog.show();
 
+                //sign in the current user and upon successful sign in, launch BuyAndSellActivity otherwise show failure message
                 mFirebaseAuth.signInWithEmailAndPassword(mUserName.getText().toString(), mPassWord.getText().toString())
                         .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
@@ -115,6 +116,7 @@ public class LoginActivity extends AppCompatActivity {
 
         });
 
+        //Lauch SignUpActivity when user clicks on Sign up button
         mSignUp_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
