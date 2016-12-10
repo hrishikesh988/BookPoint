@@ -45,12 +45,6 @@
                   android:screenOrientation="portrait">
         </activity>
         <activity android:name=".SellActivity"/>
-        <activity android:name=".SearchResultActivity"
-                  android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".MainActivity"
-                  android:screenOrientation="portrait">
-        </activity>
         <activity android:name=".BuyBookActivity"
                   android:screenOrientation="portrait">
         </activity>

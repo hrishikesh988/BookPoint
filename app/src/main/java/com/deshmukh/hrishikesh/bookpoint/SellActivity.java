@@ -80,7 +80,7 @@ public class SellActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if(mTitle.getText().toString().trim() != "" || mPrice.getText().toString().trim() != "" || mPublisher.getText().toString().trim() != "" ){
+                if(mTitle.getText().toString().trim() == "" || mPrice.getText().toString().trim() == "" || mPublisher.getText().toString().trim() == "" ){
 
                     Toast.makeText(SellActivity.this, "Book information fields cannot be empty",Toast.LENGTH_SHORT).show();
                 }

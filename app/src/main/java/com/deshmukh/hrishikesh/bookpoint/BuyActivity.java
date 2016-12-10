@@ -17,16 +17,27 @@ import java.util.Locale;
 
 /**
  * Created by dhawaldabholkar on 12/3/16.
+ * This is a BuyActivity. when User chooses to buy a book from BuyAndSaleActivity, this Activity is triggered.
+ * This activity prompts user to enter book name using either text or speech input.
+ * Then it searches the book name in firebase database and transfers user to BuyBookActivity.
  */
 
 public class BuyActivity extends AppCompatActivity {
 
-    //private EditText mBookname;
+
+    /**
+     * mSearchButton - Button to search user input with Books database (firebase JSON tree)
+     * mImageButton - Image Button to invoke SpeechToText Recognizer intent
+     * mBookName - EditText to hold book name provided by the user.
+     */
+
     private Button mSearchButton;
     private ImageButton mImageButton;
     private EditText mBookname;
 
 
+    //Method to put extra in the intent
+    //This method puts user's uID in intent which is passed by BuyAndSaleActivity
     public static Intent newIntent(Context packageContext, String username) {
         Intent i = new Intent( packageContext, BuyActivity.class);
         i.putExtra("user_name", username);
@@ -42,35 +53,54 @@ public class BuyActivity extends AppCompatActivity {
         mSearchButton = (Button) findViewById(R.id.search);
         mImageButton = (ImageButton) findViewById(R.id.imageButton);
 
+        /**
+         * OnClickListener for SearchButton: Take user input validates against valid and invalid values.
+         * Upon invalid values: Shows a toast to user that input is invalid.
+         * Upon valid values: Start a a BuyBookActivity by passing book name as extra into intent.
+         */
         mSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle extras = getIntent().getExtras();
                 //String username = extras.getString("user_name");
+
+                //Validate user input
                 String book_name = mBookname.getText().toString().trim();
                 if(book_name.toLowerCase().equals("null")){
                     Toast.makeText(BuyActivity.this,"Book name can not be 'null'.", Toast.LENGTH_LONG).show();
                 }
-                else if (! book_name.equals("")){
+                else if (book_name.equals("")){
+                    Toast.makeText(BuyActivity.this,"Book name can not be empty.", Toast.LENGTH_LONG).show();
+                }
+                //Upon valid input, start a a BuyBookActivity by passing book name as extra into intent
+                else {
                     Intent i = BuyBookActivity.newIntent(BuyActivity.this, book_name );
                     startActivity(i);
                 }
-                else
-                    Toast.makeText(BuyActivity.this,"Book name can not be empty.", Toast.LENGTH_LONG).show();
 
+                /**
+                 * OnClickListener for mImageButton: Invokes textToSpeech Recognizer by calling promptSpeechInput() method.
+                 */
+                mImageButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                            promptSpeechInput();
+
+
+                    }
+                });
 
             }
         });
     }
 
-    public void onButtonClick(View v)
-    {
-        if(v.getId()==R.id.imageButton)
-        {
-            promptSpeechInput();
-        }
-    }
-
+    /**
+     * promptSpeechInput() - this method triggers speech recognizer.
+     *                     - for supporting speech recognition through starting an Intent
+     *                     - ACTION_RECOGNIZE_SPEECH - Starts an activity that will prompt the user for speech and send it through a speech recognizer.
+     *                     - EXTRA_LANGUAGE_MODEL - Informs the recognizer which speech model to prefer when performing ACTION_RECOGNIZE_SPEECH.
+     *                     - LANGUAGE_MODEL_FREE_FORM - Use a language model based on free-form speech recognition
+     */
     public void promptSpeechInput() {
         Intent i = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         i.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
@@ -86,6 +116,12 @@ public class BuyActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * onActivityResult for speech-to-text intent (RecognizerIntent)
+     * @param requestcode - Request code sent while starting an RecognizerIntent
+     * @param resultcode - Result code received while receiving the speech to text conversion.
+     * @param i - RecognizerIntent
+     */
     public void onActivityResult(int requestcode,int resultcode, Intent i)
     {
       super.onActivityResult(requestcode, resultcode,i);

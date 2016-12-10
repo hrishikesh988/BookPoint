@@ -17,18 +17,34 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+/**
+ * This is Login Activity which has
+ *  - user name editText
+ *  - Password editText
+ *  - Sign in - button
+ *  - Sign up - Button
+ */
 public class LoginActivity extends AppCompatActivity {
+
+    //Define all widgets - text views, edit texts, buttons, check box
 
     private EditText mUserName;
     private EditText mPassWord;
     private Button mSignIn_button;
     private Button mSignUp_button;
     private CheckBox mRememberMe;
+
+    //boolean to check if user has click on Remember me check box
     private boolean saveLogin;
+
+    //share preference variable to handle user's remember me choice
     private SharedPreferences loginPreferences;
     private SharedPreferences.Editor loginPrefEditor;
 
+    //Login/User authenticator
     private FirebaseAuth mFirebaseAuth;
+
+    //Progressbar to display loading/Please wait screen
     private ProgressDialog mProgressDialog;
 
     @Override
@@ -36,6 +52,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+
+        //wire up all the widgets
         mUserName = (EditText) findViewById(R.id.UserName_ET);
         mPassWord = (EditText) findViewById(R.id.Password_ET);
         mSignIn_button = (Button) findViewById(R.id.SignIn_Button);
@@ -50,6 +68,7 @@ public class LoginActivity extends AppCompatActivity {
 
         saveLogin = loginPreferences.getBoolean("saveLogin",false);
 
+        //If "remember me" check box was checked last time restore user's login info
         if(saveLogin){
             mUserName.setText(loginPreferences.getString("username",""));
             mPassWord.setText(loginPreferences.getString("password",""));
@@ -60,6 +79,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                //If user checks "remember me" check box was checked last time restore user's login info
                 if(mRememberMe.isChecked()){
                     loginPrefEditor.putBoolean("saveLogin", true);
                     loginPrefEditor.putString("username",mUserName.getText().toString());
