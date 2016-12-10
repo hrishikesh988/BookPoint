@@ -46,9 +46,19 @@ public class BuyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Bundle extras = getIntent().getExtras();
-                String username = extras.getString("user_name");
-                Intent i = BuyBookActivity.newIntent(BuyActivity.this,username,mBookname.getText().toString() );
-                startActivity(i);
+                //String username = extras.getString("user_name");
+                String book_name = mBookname.getText().toString().trim();
+                if(book_name.toLowerCase().equals("null")){
+                    Toast.makeText(BuyActivity.this,"Book name can not be 'null'.", Toast.LENGTH_LONG).show();
+                }
+                else if (! book_name.equals("")){
+                    Intent i = BuyBookActivity.newIntent(BuyActivity.this, book_name );
+                    startActivity(i);
+                }
+                else
+                    Toast.makeText(BuyActivity.this,"Book name can not be empty.", Toast.LENGTH_LONG).show();
+
+
             }
         });
     }

@@ -40,9 +40,9 @@ public class BuyBookActivity extends AppCompatActivity {
     private DatabaseReference mDatabaseReference;
     private DatabaseReference mDatabaseReference1;
 
-    public static Intent newIntent(Context packageContext, String username, String title) {
+    public static Intent newIntent(Context packageContext, String title) {
         Intent i = new Intent( packageContext, BuyBookActivity.class);
-        i.putExtra("user_name", username);
+        //i.putExtra("user_name", username);
         i.putExtra("title", title);
         return i;
     }
@@ -58,6 +58,7 @@ public class BuyBookActivity extends AppCompatActivity {
         t4 = (TextView) findViewById(R.id.textView8);
         t5 = (TextView) findViewById(R.id.textView11);
 
+
         b1 = (Button)  findViewById(R.id.button);
         b2 = (Button)  findViewById(R.id.button5);
         b3 = (Button)  findViewById(R.id.button2);
@@ -70,6 +71,8 @@ public class BuyBookActivity extends AppCompatActivity {
         b3.setVisibility(View.INVISIBLE);
         b4.setVisibility(View.INVISIBLE);
 
+        t5.setText("Your Order");
+
 
 
         mFirebaseAuth = FirebaseAuth.getInstance();
@@ -78,19 +81,33 @@ public class BuyBookActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         String username = extras.getString("user_name");
-        String title = extras.getString("title");
+        final String title = extras.getString("title");
 
-        mDatabaseReference.child(title).addValueEventListener(new ValueEventListener() {
+        mDatabaseReference.child(title).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 Books b = dataSnapshot.getValue(Books.class);
 
-                t1.setText("Title: "+b.Title);
-                t2.setText("Price: "+b.Price);
-                t3.setText("Publisher: "+b.Publisher);
-                t4.setText("Condition: "+b.Condition);
-                user_name = b.UID;
+                if(b != null) {
+                    t1.setText("Title: " + b.Title);
+                    t2.setText("Price: " + b.Price);
+                    t3.setText("Publisher: " + b.Publisher);
+                    t4.setText("Condition: " + b.Condition);
+                    user_name = b.UID;
+                }
+
+                else{
+
+                    Toast.makeText(BuyBookActivity.this, "No Results found!",Toast.LENGTH_LONG).show();
+                    t5.setText("No Results for '"+title+"'");
+                    t5.setVisibility(VISIBLE);
+                    b2.setVisibility(VISIBLE);
+                    b3.setVisibility(VISIBLE);
+                    b4.setVisibility(VISIBLE);
+                    b5.setVisibility(View.INVISIBLE);
+
+                }
 
             }
 
@@ -100,20 +117,27 @@ public class BuyBookActivity extends AppCompatActivity {
             }
         });
 
+
+
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(BuyBookActivity.this, "Your order has been received and processed successfully.",Toast.LENGTH_LONG).show();
-                t1.setVisibility(View.INVISIBLE);
-                t2.setVisibility(View.INVISIBLE);
-                t3.setVisibility(View.INVISIBLE);
-                t4.setVisibility(View.INVISIBLE);
-                t5.setVisibility(View.INVISIBLE);
-                b1.setVisibility(View.INVISIBLE);
-                b2.setVisibility(VISIBLE);
-                b3.setVisibility(VISIBLE);
-                b4.setVisibility(VISIBLE);
 
+                if (mDatabaseReference.child(title) != null){
+
+                    mDatabaseReference.child(title).removeValue();
+                    Toast.makeText(BuyBookActivity.this, "Your order has been received and processed successfully.",Toast.LENGTH_LONG).show();
+                    t1.setVisibility(View.INVISIBLE);
+                    t2.setVisibility(View.INVISIBLE);
+                    t3.setVisibility(View.INVISIBLE);
+                    t4.setVisibility(View.INVISIBLE);
+                    t5.setVisibility(View.INVISIBLE);
+                    b1.setVisibility(View.INVISIBLE);
+                    b2.setVisibility(VISIBLE);
+                    b3.setVisibility(VISIBLE);
+                    b4.setVisibility(VISIBLE);
+
+                }
             }
         });
 

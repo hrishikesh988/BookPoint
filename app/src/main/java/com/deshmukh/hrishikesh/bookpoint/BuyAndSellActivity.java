@@ -98,6 +98,7 @@ public class BuyAndSellActivity extends AppCompatActivity {
         mbuybooksbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 //Toast.makeText(LoginActivity.this, "Sign up code goes here", Toast.LENGTH_SHORT).show();
                 Intent i = BuyActivity.newIntent(BuyAndSellActivity.this, mFirebaseAuth.getCurrentUser().getUid());
                 startActivity(i);

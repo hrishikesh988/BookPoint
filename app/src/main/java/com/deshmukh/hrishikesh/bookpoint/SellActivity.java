@@ -55,6 +55,8 @@ public class SellActivity extends AppCompatActivity {
         mSpinner.setAdapter(adapter);
         mSubmit = (Button) findViewById(R.id.button3);
 
+        mTitle.requestFocus();
+
         mFirebaseAuth = FirebaseAuth.getInstance();
         mDatabaseReference = FirebaseDatabase.getInstance().getReference();
 
@@ -78,9 +80,18 @@ public class SellActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                saveBookInfo();
-                Toast.makeText(SellActivity.this, "Book added",Toast.LENGTH_SHORT).show();
+                if(mTitle.getText().toString().trim() != "" || mPrice.getText().toString().trim() != "" || mPublisher.getText().toString().trim() != "" ){
 
+                    Toast.makeText(SellActivity.this, "Book information fields cannot be empty",Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    saveBookInfo();
+                    Toast.makeText(SellActivity.this, "Book added",Toast.LENGTH_SHORT).show();
+                    mTitle.setText("");
+                    mPrice.setText("");
+                    mPublisher.setText("");
+                }
             }
         });
 
